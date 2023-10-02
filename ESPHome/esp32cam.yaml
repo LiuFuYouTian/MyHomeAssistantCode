@@ -1,0 +1,85 @@
+esphome:
+  name: esp32cam
+  friendly_name: ESP32CAM
+#设置参数写入频率
+preferences:
+  flash_write_interval: 60min
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "jgVLTA0bs9LdqZ3IfEVtyObq59Q3LyzhxAOAuUpJ+4o="
+
+ota:
+  password: "1deff81ee9390a61246bf14b2c13d5cc"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32Cam Fallback Hotspot"
+    password: "FuQV52siSSIj"
+
+# Example configuration entry
+esp32_camera:
+  external_clock:
+    pin: GPIO0
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  pixel_clock_pin: GPIO22
+  power_down_pin: GPIO32
+  resolution: 800x600 
+  jpeg_quality: 12
+  max_framerate: 60 fps
+  
+  # Image settings
+  name: My Camera
+  # ...
+  # Example configuration entry
+output:
+  - platform: ledc
+    pin: GPIO4
+    id: gpio_4
+  - platform: slow_pwm
+    pin: GPIO33
+    id: 'StateLED'
+    period: 1s
+
+# Example usage in a light
+#补光灯
+light:
+  - platform: monochromatic
+    output: gpio_4
+    name: "Kitchen Light"
+#状态指示LED
+  - platform: monochromatic
+    output: StateLED
+    gamma_correct: 1.0
+    name: "StateLED"
+    restore_mode: RESTORE_DEFAULT_OFF
+  
+
+# Example configuration entry
+esp32_camera_web_server:
+  - port: 8080
+    mode: stream
+  - port: 8081
+    mode: snapshot
+
+captive_portal:
+    

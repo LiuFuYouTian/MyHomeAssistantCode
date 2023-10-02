@@ -1,0 +1,213 @@
+esphome:
+  name: esp32s2-fish
+  friendly_name: ESP32S2
+
+#设置参数写入频率
+preferences:
+  flash_write_interval: 10min
+
+esp32:
+  board: lolin_s2_mini
+  variant: esp32s2
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  #hardware_uart: USB_CDC
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "PGS4S9E/zvfF3oSG3cR2Ol0nGGrTMovQ+PcZm+wQcjM="
+
+ota:
+  password: "958da5ee855d53bcfdeb904ad32eba6b"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32S2 Fallback Hotspot"
+    password: "d09Iw6iL2xMV"
+    
+#web_server:
+#  port: 80
+
+globals:
+  - id: GroableWaterPumpPWM
+    type: int
+    restore_value: true
+    initial_value: "80"
+
+switch:
+  #喂食器控制
+  - platform: gpio
+    pin: GPIO39
+    id: IO_FeedControl
+    name: "FeedControl"
+    inverted: false
+    on_turn_on:
+    - delay: 10s
+    - switch.turn_off: IO_FeedControl
+  #加湿器状态控制
+  - platform: gpio
+    pin: GPIO17
+    id: IO_HumidityControl
+    inverted: false
+  #蜂鸣器控制
+  - platform: gpio
+    pin: GPIO9
+    id: IO_BuzzControl
+    inverted: false
+  #加湿器复位控制
+  - platform: gpio
+    pin: GPIO21
+    id: IO_HumidityReset
+    name: "HumidityControl"
+    inverted: false
+    on_turn_on:
+    - delay: 100ms
+    - switch.turn_off: IO_HumidityControl
+    - delay: 100ms
+    - switch.turn_on: IO_HumidityControl
+    - delay: 100ms
+    - switch.turn_off: IO_HumidityControl
+    - delay: 100ms
+    - switch.turn_on: IO_HumidityControl
+    - delay: 100ms
+  #水泵自动维护控制
+  - platform: gpio
+    pin: GPIO8
+    id: WaterPumpAuto
+    name: "WaterPumpAutoMaintain"
+    inverted: false
+    
+binary_sensor:
+  - platform: gpio
+    name: "FeedReset"
+    pin: GPIO37
+
+
+output:
+  #水泵转速控制
+  - platform: ledc
+    pin: GPIO5
+    id: IO_WaterPumpPWM
+    inverted: true
+    frequency: 5000HZ
+  #气泵控制
+  - platform: ledc
+    pin: GPIO35
+    id: IO_AIRPWM
+    frequency: 5000HZ
+  #LED亮度控制
+  - platform: ledc
+    pin: GPIO40
+    id: IO_LEDPWM
+    frequency: 5000HZ
+  #状态指示LED控制
+  - platform: slow_pwm
+    pin: GPIO15
+    id: StateLED
+    period: 1s
+
+# Example usage in a light
+light:
+  #水泵转速控制
+  - platform: monochromatic
+    output: IO_WaterPumpPWM
+    gamma_correct: 0.5
+    name: "WaterPumpPWM"
+    restore_mode: RESTORE_DEFAULT_ON
+  #气泵控制
+  - platform: monochromatic
+    output: IO_AIRPWM
+    gamma_correct: 0.5
+    name: "AirPWM"
+    restore_mode: RESTORE_DEFAULT_ON
+  #LED亮度控制
+  - platform: monochromatic
+    output: IO_LEDPWM
+    name: "LEDPWM"
+    restore_mode: RESTORE_DEFAULT_OFF
+    default_transition_length: 2s
+  #状态指示LED
+  - platform: monochromatic
+    output: StateLED
+    gamma_correct: 1.0
+    name: "StateLED"
+    restore_mode: RESTORE_DEFAULT_OFF
+
+
+
+# Example configuration entry for ESP32
+i2c:  
+  - id: bh1750_iic
+    sda: GPIO12
+    scl: GPIO11
+    scan: true
+
+# Example configuration entry
+dallas:
+  - pin: GPIO7
+
+# Example configuration entry
+sensor:
+  #温度感器
+  - platform: dallas
+    address: 0x033cc5f64953e928
+    name: "WaterTemperature"
+  #光线传感器
+  - platform: bh1750
+    i2c_id: bh1750_iic
+    name: "BH1750 Illuminance"
+    address: 0x23
+    update_interval: 1s
+  #12V输入监测ADC
+  - platform: adc
+    name: "12V In voltage"
+    pin: GPIO4
+    accuracy_decimals: 2
+    update_interval: 1s
+    attenuation: 11dB
+    filters:
+      - multiply: 5.7
+  #12V升压监测ADC
+  - platform: adc
+    name: "12V DC-DC voltage"
+    pin: GPIO2
+    accuracy_decimals: 2
+    update_interval: 1s
+    attenuation: 11dB
+    filters:
+      - multiply: 5.7
+  #5V降压监测ADC
+  - platform: adc
+    name: "5V DC-DC voltage"
+    pin: GPIO6
+    accuracy_decimals: 2
+    update_interval: 1s
+    attenuation: 11dB
+    filters:
+      - multiply: 5.7
+  #水位监测ADC
+  - platform: adc
+    unit_of_measurement: "%"
+    name: "WaterLever"
+    pin: GPIO1
+    accuracy_decimals: 2
+    update_interval: 1s
+    attenuation: 11dB
+    filters:
+      - multiply: 45
+  #水泵转速检查
+  - platform: pulse_counter
+    pin: GPIO3
+    name: 'PumpSpeed'
+    update_interval: 1s
+
+captive_portal:
+    
+    
