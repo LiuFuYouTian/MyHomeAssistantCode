@@ -1,21 +1,354 @@
 [
     {
-        "id": "f6f2187d.f17ca8",
+        "id": "65759df00513733e",
         "type": "tab",
-        "label": "鱼缸控制",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "00e2a183735022d7",
-        "type": "tab",
-        "label": "测试",
+        "label": "卧室自动控制",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "2e463763d424c21d",
+        "id": "b69eb9089d889991",
+        "type": "server-state-changed",
+        "z": "65759df00513733e",
+        "name": "电脑与小爱音箱音量联动",
+        "server": "71ef4160c314976d",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "switch.lemesh_sw0a02_8dce_switch",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "on",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "f9d8b44dbe3f9399"
+            ],
+            [
+                "6626d6238b27c544"
+            ]
+        ]
+    },
+    {
+        "id": "f9d8b44dbe3f9399",
+        "type": "xiaoai-volume",
+        "z": "65759df00513733e",
+        "name": "",
+        "xiaoai": "0ec866c7adab01e2",
+        "volume": "40",
+        "device": "",
+        "x": 900,
+        "y": 320,
+        "wires": [
+            [
+                "be9d72dfa6b5f429"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6626d6238b27c544",
+        "type": "xiaoai-volume",
+        "z": "65759df00513733e",
+        "name": "",
+        "xiaoai": "0ec866c7adab01e2",
+        "volume": "20",
+        "device": "",
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [
+                "98f14d044e5a7dd0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "be9d72dfa6b5f429",
+        "type": "xiaoai-tts",
+        "z": "65759df00513733e",
+        "name": "电脑开了呀~我把音量调大了哦",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": "电脑开了呀~我把音量调大了哦",
+        "device": "",
+        "x": 1150,
+        "y": 320,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "98f14d044e5a7dd0",
+        "type": "xiaoai-tts",
+        "z": "65759df00513733e",
+        "name": "电脑关了呀~我把音量调小了哦",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": "电脑关了呀~我把音量调小了哦",
+        "device": "",
+        "x": 1150,
+        "y": 360,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9a68d271e1ee401d",
+        "type": "inject",
+        "z": "65759df00513733e",
+        "name": "0点~6点检查水泵功率",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "*/10 0-5 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 690,
+        "y": 540,
+        "wires": [
+            [
+                "736a4a532df04554"
+            ]
+        ]
+    },
+    {
+        "id": "2194cf5e789e93e0",
+        "type": "function",
+        "z": "65759df00513733e",
+        "name": "水泵功率转换为百分比",
+        "func": "msg.payload = msg.data.attributes.brightness/255*100;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 540,
+        "wires": [
+            [
+                "7b82931694de37e9"
+            ]
+        ]
+    },
+    {
+        "id": "cb30d2e1e2d9acb8",
+        "type": "debug",
+        "z": "65759df00513733e",
+        "name": "早上6点水泵设置为100%",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "736a4a532df04554",
+        "type": "api-current-state",
+        "z": "65759df00513733e",
+        "name": "获取水泵功率",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "jsonata",
+        "halt_if_compare": "is",
+        "entity_id": "light.esp32s2_fish_waterpumppwm",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 940,
+        "y": 540,
+        "wires": [
+            [
+                "2194cf5e789e93e0"
+            ]
+        ]
+    },
+    {
+        "id": "7b82931694de37e9",
+        "type": "switch",
+        "z": "65759df00513733e",
+        "name": "判断当前功率是否大于75%",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "75",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1440,
+        "y": 540,
+        "wires": [
+            [
+                "1645f250974f7d26"
+            ]
+        ]
+    },
+    {
+        "id": "1645f250974f7d26",
+        "type": "api-call-service",
+        "z": "65759df00513733e",
+        "name": "水泵设置为75%",
+        "server": "71ef4160c314976d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp32s2_fish_waterpumppwm"
+        ],
+        "data": "{\"brightness_pct\":75}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1680,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4de2e2333101f1bd",
+        "type": "api-call-service",
+        "z": "65759df00513733e",
+        "name": "水泵设置为100%",
+        "server": "71ef4160c314976d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp32s2_fish_waterpumppwm"
+        ],
+        "data": "{\"brightness_pct\":100}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 950,
+        "y": 640,
+        "wires": [
+            [
+                "cb30d2e1e2d9acb8"
+            ]
+        ]
+    },
+    {
+        "id": "4cc07f2a03dd6810",
+        "type": "inject",
+        "z": "65759df00513733e",
+        "name": "6点自动把水泵设置为100%",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 06 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 700,
+        "y": 640,
+        "wires": [
+            [
+                "4de2e2333101f1bd"
+            ]
+        ]
+    },
+    {
+        "id": "71ef4160c314976d",
         "type": "server",
         "name": "Home Assistant",
         "version": 5,
@@ -38,2087 +371,8 @@
         "enableGlobalContextStore": false
     },
     {
-        "id": "f478b985d71a0d14",
-        "type": "light-scheduler-settings",
-        "name": "my settings",
-        "latitude": "23.3083",
-        "longitude": "116.3381"
-    },
-    {
-        "id": "98d726c3977efed0",
+        "id": "0ec866c7adab01e2",
         "type": "xiaoai-tts-configurator",
         "name": ""
-    },
-    {
-        "id": "3cc11d24.ff01a2",
-        "type": "comment",
-        "z": "f6f2187d.f17ca8",
-        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
-        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
-        "x": 350,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "206b0767cda6850d",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "8点自动喂鱼",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 08 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 600,
-        "wires": [
-            [
-                "5ac04c094343a0ea"
-            ]
-        ]
-    },
-    {
-        "id": "d307435e36634e9a",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "定时自动喂食",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 680,
-        "y": 720,
-        "wires": []
-    },
-    {
-        "id": "81e6f4fdd1c113a2",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "10点自动喂鱼",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 10 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 660,
-        "wires": [
-            [
-                "5ac04c094343a0ea"
-            ]
-        ]
-    },
-    {
-        "id": "9c58d5a9513120a7",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "12点自动喂鱼",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 12 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 720,
-        "wires": [
-            [
-                "5ac04c094343a0ea"
-            ]
-        ]
-    },
-    {
-        "id": "5eacd9a65f550451",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "14点自动喂鱼",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 14 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 780,
-        "wires": [
-            [
-                "5ac04c094343a0ea"
-            ]
-        ]
-    },
-    {
-        "id": "e2d1f2d68c55343a",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "18点自动喂鱼",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 18 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 840,
-        "wires": [
-            [
-                "5ac04c094343a0ea"
-            ]
-        ]
-    },
-    {
-        "id": "5ac04c094343a0ea",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "打开喂食器",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "switch",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "switch.esp32s2_fish_feedcontrol"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 470,
-        "y": 720,
-        "wires": [
-            [
-                "d307435e36634e9a"
-            ]
-        ]
-    },
-    {
-        "id": "f2f45458997ba703",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "0点~8点定时检查并鱼缸自动关灯",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "0 0-7 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 300,
-        "y": 1000,
-        "wires": [
-            [
-                "9af72b68d96d8451"
-            ]
-        ]
-    },
-    {
-        "id": "9af72b68d96d8451",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "关闭鱼缸灯",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "light",
-        "service": "turn_off",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_ledpwm"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 570,
-        "y": 1000,
-        "wires": [
-            [
-                "e506a06dc015c25b"
-            ]
-        ]
-    },
-    {
-        "id": "8d8ab7ff0a56b568",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "5分钟自动控制鱼缸灯",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "*/5 17-18 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 260,
-        "y": 1220,
-        "wires": [
-            [
-                "17cc4dbe563fcfed"
-            ]
-        ]
-    },
-    {
-        "id": "4301fafdbb6e8f7a",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "开鱼缸灯",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "light",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_ledpwm"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1020,
-        "y": 1220,
-        "wires": [
-            [
-                "6a89bee2bae8a3a6",
-                "1109415b5eb25db9"
-            ]
-        ]
-    },
-    {
-        "id": "17cc4dbe563fcfed",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "阳台光强是否小于100",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "100",
-        "halt_if_type": "num",
-        "halt_if_compare": "lte",
-        "entity_id": "sensor.esp32s2_fish_bh1750_illuminance",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 500,
-        "y": 1220,
-        "wires": [
-            [
-                "897f9cd824a2a363",
-                "a7882ebfb38d8bdb"
-            ],
-            [
-                "c214ae0d73d741a7"
-            ]
-        ]
-    },
-    {
-        "id": "6a89bee2bae8a3a6",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "亮度低于100自动开灯",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1300,
-        "y": 1160,
-        "wires": []
-    },
-    {
-        "id": "897f9cd824a2a363",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "灯处于关闭状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "light.esp32s2_fish_ledpwm",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 780,
-        "y": 1220,
-        "wires": [
-            [
-                "4301fafdbb6e8f7a"
-            ],
-            [
-                "272cdbf72508d84d"
-            ]
-        ]
-    },
-    {
-        "id": "272cdbf72508d84d",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "灯已经开了",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1030,
-        "y": 1280,
-        "wires": []
-    },
-    {
-        "id": "c214ae0d73d741a7",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "当前亮度大于100",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 790,
-        "y": 1280,
-        "wires": []
-    },
-    {
-        "id": "a7882ebfb38d8bdb",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "当前亮度小于100",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 790,
-        "y": 1160,
-        "wires": []
-    },
-    {
-        "id": "e506a06dc015c25b",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "自动关闭鱼缸灯",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 800,
-        "y": 1000,
-        "wires": []
-    },
-    {
-        "id": "5475eecda2d6ad5f",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵状态反转-开启",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1410,
-        "y": 1420,
-        "wires": []
-    },
-    {
-        "id": "6873910e8f6bed60",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "间隔1小时自动泵维护",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "3600",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 260,
-        "y": 1560,
-        "wires": [
-            [
-                "9e290478285515e2"
-            ]
-        ]
-    },
-    {
-        "id": "9e290478285515e2",
-        "type": "loop",
-        "z": "f6f2187d.f17ca8",
-        "name": "循环触发水泵状态反转-10次",
-        "kind": "fcnt",
-        "count": "20",
-        "initial": "1",
-        "step": "1",
-        "condition": "",
-        "conditionType": "js",
-        "when": "before",
-        "enumeration": "enum",
-        "enumerationType": "msg",
-        "limit": "",
-        "loopPayload": "loop-index",
-        "finalPayload": "final-orig",
-        "x": 540,
-        "y": 1560,
-        "wires": [
-            [
-                "f1f0c14a3b556186"
-            ],
-            [
-                "3368a36d2e5fa3dc"
-            ]
-        ]
-    },
-    {
-        "id": "f4bd1ea4aa435c29",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵维护结束-开启水泵",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1050,
-        "y": 1460,
-        "wires": []
-    },
-    {
-        "id": "3368a36d2e5fa3dc",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "反转水泵开关状态",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "light",
-        "service": "toggle",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_waterpumppwm"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 850,
-        "y": 1540,
-        "wires": [
-            [
-                "138ece5c344be36b"
-            ]
-        ]
-    },
-    {
-        "id": "f1f0c14a3b556186",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "开启水泵",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "light",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_waterpumppwm"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 840,
-        "y": 1460,
-        "wires": [
-            [
-                "f4bd1ea4aa435c29"
-            ]
-        ]
-    },
-    {
-        "id": "138ece5c344be36b",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "light.esp32s2_fish_waterpumppwm",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1100,
-        "y": 1540,
-        "wires": [
-            [
-                "5475eecda2d6ad5f",
-                "84d4395fdae4e31f"
-            ],
-            [
-                "9367652c08587048",
-                "1c0dd6a21b4bfd59"
-            ]
-        ]
-    },
-    {
-        "id": "9367652c08587048",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵状态反转-关闭",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1410,
-        "y": 1620,
-        "wires": []
-    },
-    {
-        "id": "1c0dd6a21b4bfd59",
-        "type": "delay",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "2",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1380,
-        "y": 1560,
-        "wires": [
-            [
-                "9e290478285515e2"
-            ]
-        ]
-    },
-    {
-        "id": "84d4395fdae4e31f",
-        "type": "delay",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "30",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1380,
-        "y": 1460,
-        "wires": [
-            [
-                "9e290478285515e2"
-            ]
-        ]
-    },
-    {
-        "id": "1109415b5eb25db9",
-        "type": "xiaoai-tts",
-        "z": "f6f2187d.f17ca8",
-        "name": "太黑了呀~打开鱼缸灯啦！",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "滴~~滴~太黑了呀~打开鱼缸灯拉！",
-        "device": "",
-        "x": 1310,
-        "y": 1220,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "db7da4e114e157ed",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水温当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "32",
-        "halt_if_type": "num",
-        "halt_if_compare": "gte",
-        "entity_id": "sensor.esp32s2_fish_watertemperature",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 860,
-        "y": 2440,
-        "wires": [
-            [
-                "361c64d4d89f874d"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "21ceb3be93a64498",
-        "type": "delay",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "10",
-        "timeoutUnits": "minutes",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 660,
-        "y": 2440,
-        "wires": [
-            [
-                "db7da4e114e157ed"
-            ]
-        ]
-    },
-    {
-        "id": "42e776e45a8bc17e",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "开启加湿器",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "switch",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "switch.esp32s2_fish_humiditycontrol"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1270,
-        "y": 2440,
-        "wires": [
-            [
-                "7d8d266bcf9ef002",
-                "87097a0803de5109"
-            ]
-        ]
-    },
-    {
-        "id": "933b496a46904cfb",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水温当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "32",
-        "halt_if_type": "num",
-        "halt_if_compare": "gte",
-        "entity_id": "sensor.esp32s2_fish_watertemperature",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 860,
-        "y": 2520,
-        "wires": [
-            [],
-            [
-                "398404249ce0e1f4"
-            ]
-        ]
-    },
-    {
-        "id": "158d4a0efd143303",
-        "type": "delay",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "10",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 660,
-        "y": 2520,
-        "wires": [
-            [
-                "933b496a46904cfb"
-            ]
-        ]
-    },
-    {
-        "id": "e3528ed0a65545c3",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "关闭加湿器",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "switch",
-        "service": "turn_off",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "switch.esp32s2_fish_humiditycontrol"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1270,
-        "y": 2520,
-        "wires": [
-            [
-                "ed72aa62231c0b2c",
-                "b71e44fd58673144"
-            ]
-        ]
-    },
-    {
-        "id": "7d8d266bcf9ef002",
-        "type": "xiaoai-tts",
-        "z": "f6f2187d.f17ca8",
-        "name": "鱼缸水温好高呀！开启加湿器尝试降温咯！",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "滴~滴~鱼缸水温好高呀！开启加湿器尝试降温咯！",
-        "device": "",
-        "x": 1610,
-        "y": 2440,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "4528526d72c7c763",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "5分钟水温监测",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 2480,
-        "wires": [
-            [
-                "9e0c3ac60727a780"
-            ]
-        ]
-    },
-    {
-        "id": "9e0c3ac60727a780",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水温当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "32",
-        "halt_if_type": "num",
-        "halt_if_compare": "gte",
-        "entity_id": "sensor.esp32s2_fish_watertemperature",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 460,
-        "y": 2480,
-        "wires": [
-            [
-                "21ceb3be93a64498"
-            ],
-            [
-                "158d4a0efd143303"
-            ]
-        ]
-    },
-    {
-        "id": "87097a0803de5109",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "水温过高",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1500,
-        "y": 2380,
-        "wires": []
-    },
-    {
-        "id": "ed72aa62231c0b2c",
-        "type": "xiaoai-tts",
-        "z": "f6f2187d.f17ca8",
-        "name": "鱼缸水温恢复正常了，关闭加湿器咯~",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "滴~滴~鱼缸水温恢复正常了，关闭加湿器咯~",
-        "device": "",
-        "x": 1590,
-        "y": 2520,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "b71e44fd58673144",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "水温恢复正常",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1520,
-        "y": 2580,
-        "wires": []
-    },
-    {
-        "id": "398404249ce0e1f4",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "加湿器当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "switch.esp32s2_fish_humiditycontrol",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1060,
-        "y": 2520,
-        "wires": [
-            [
-                "e3528ed0a65545c3"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "361c64d4d89f874d",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "加湿器当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "switch.esp32s2_fish_humiditycontrol",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1060,
-        "y": 2440,
-        "wires": [
-            [],
-            [
-                "42e776e45a8bc17e"
-            ]
-        ]
-    },
-    {
-        "id": "74e6df75c7636d5a",
-        "type": "server-state-changed",
-        "z": "f6f2187d.f17ca8",
-        "name": "喂食器自动关闭",
-        "server": "2e463763d424c21d",
-        "version": 4,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "switch.esp32s2_fish_feedcontrol",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": true,
-        "ignoreCurrentStateUnavailable": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 220,
-        "y": 500,
-        "wires": [
-            [
-                "7f26a4781409047d"
-            ]
-        ]
-    },
-    {
-        "id": "a76fefc45ea97fb8",
-        "type": "delay",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "2",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 660,
-        "y": 500,
-        "wires": [
-            [
-                "1a92b6f290fe3ef4"
-            ]
-        ]
-    },
-    {
-        "id": "7f26a4781409047d",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "喂食器当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "switch.esp32s2_fish_feedcontrol",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 460,
-        "y": 500,
-        "wires": [
-            [
-                "a76fefc45ea97fb8"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "6f4f5eecb804e905",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "关闭喂食器",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "switch",
-        "service": "turn_off",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "switch.esp32s2_fish_feedcontrol"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1070,
-        "y": 500,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "578528ce4cb42b55",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "喂食器复位成功",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1080,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "1a92b6f290fe3ef4",
-        "type": "ha-wait-until",
-        "z": "f6f2187d.f17ca8",
-        "name": "等待喂食器复位",
-        "server": "2e463763d424c21d",
-        "version": 2,
-        "outputs": 2,
-        "entityId": "binary_sensor.esp32s2_fish_feedreset",
-        "entityIdFilterType": "exact",
-        "property": "state",
-        "comparator": "is",
-        "value": "off",
-        "valueType": "str",
-        "timeout": "8",
-        "timeoutType": "num",
-        "timeoutUnits": "seconds",
-        "checkCurrentState": true,
-        "blockInputOverrides": true,
-        "outputProperties": [],
-        "entityLocation": "data",
-        "entityLocationType": "none",
-        "x": 860,
-        "y": 500,
-        "wires": [
-            [
-                "6f4f5eecb804e905",
-                "578528ce4cb42b55"
-            ],
-            [
-                "6f4f5eecb804e905",
-                "3f37a620aa749412",
-                "ab2203cd6430c72e"
-            ]
-        ]
-    },
-    {
-        "id": "3f37a620aa749412",
-        "type": "xiaoai-tts",
-        "z": "f6f2187d.f17ca8",
-        "name": "投喂好像出问题了呀！请检查下喂食器哦！",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "滴~滴~投喂好像出问题了呀！请检查下喂食器哦！",
-        "device": "",
-        "x": 1170,
-        "y": 560,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "ab2203cd6430c72e",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "喂食器复位失败",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1080,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "57c2fb40656efb7f",
-        "type": "ha-wait-until",
-        "z": "f6f2187d.f17ca8",
-        "name": "等待可能的鱼缸水位过低异常",
-        "server": "2e463763d424c21d",
-        "version": 2,
-        "outputs": 1,
-        "entityId": "sensor.esp32s2_fish_waterlever",
-        "entityIdFilterType": "exact",
-        "property": "state",
-        "comparator": "lte",
-        "value": "50",
-        "valueType": "num",
-        "timeout": "",
-        "timeoutType": "num",
-        "timeoutUnits": "seconds",
-        "checkCurrentState": true,
-        "blockInputOverrides": true,
-        "outputProperties": [],
-        "entityLocation": "data",
-        "entityLocationType": "none",
-        "x": 540,
-        "y": 1920,
-        "wires": [
-            [
-                "a6a916f16e27123c"
-            ]
-        ]
-    },
-    {
-        "id": "a6a916f16e27123c",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "关闭水泵",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "light",
-        "service": "turn_off",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_waterpumppwm"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 760,
-        "y": 1920,
-        "wires": [
-            [
-                "1117bb18e5bf80a4",
-                "fb4941291ce28ff2"
-            ]
-        ]
-    },
-    {
-        "id": "1117bb18e5bf80a4",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "鱼缸水位过低-关闭水泵",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1030,
-        "y": 1880,
-        "wires": []
-    },
-    {
-        "id": "fb4941291ce28ff2",
-        "type": "xiaoai-tts",
-        "z": "f6f2187d.f17ca8",
-        "name": "快看下鱼缸，鱼缸好像没水了！已经关闭水泵了哦",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "滴~滴~快看下鱼缸，鱼缸好像没水了！已经关闭水泵了哦",
-        "device": "",
-        "x": 1110,
-        "y": 1920,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "93ca32dc1798888c",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "30秒水位、水泵监测",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "30",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 260,
-        "y": 2020,
-        "wires": [
-            [
-                "57c2fb40656efb7f",
-                "c4fce35f9e863516",
-                "dce52a7e5d8b55f4"
-            ]
-        ]
-    },
-    {
-        "id": "97bdfdf645a88cfd",
-        "type": "api-call-service",
-        "z": "f6f2187d.f17ca8",
-        "name": "开启水泵",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "light",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_waterpumppwm"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1040,
-        "y": 2100,
-        "wires": [
-            [
-                "22e8f4b9b7b336ce",
-                "f64a581b7bda549d"
-            ]
-        ]
-    },
-    {
-        "id": "22e8f4b9b7b336ce",
-        "type": "xiaoai-tts",
-        "z": "f6f2187d.f17ca8",
-        "name": "鱼缸水位是正常的，已经重新打开水泵了哦~",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "滴~滴~鱼缸水位是正常的，已经重新打开水泵了哦~",
-        "device": "",
-        "x": 1350,
-        "y": 2100,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "f64a581b7bda549d",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "鱼缸水位正常-开启水泵",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1290,
-        "y": 2160,
-        "wires": []
-    },
-    {
-        "id": "c343416864c34d4c",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "light.esp32s2_fish_waterpumppwm",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 860,
-        "y": 2100,
-        "wires": [
-            [],
-            [
-                "97bdfdf645a88cfd"
-            ]
-        ]
-    },
-    {
-        "id": "9ac1f6ccfa2e4943",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "确认水泵堵转",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1700,
-        "y": 1980,
-        "wires": []
-    },
-    {
-        "id": "20b906c760eac0b0",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵当前转速是否小于1000",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "1000",
-        "halt_if_type": "num",
-        "halt_if_compare": "lt",
-        "entity_id": "sensor.esp32s2_fish_pumpspeed",
-        "state_type": "str",
-        "blockInputOverrides": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1440,
-        "y": 2020,
-        "wires": [
-            [
-                "9ac1f6ccfa2e4943",
-                "5fdc8ded819fa9ec"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "8ea174a9846d177f",
-        "type": "delay",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "2",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 980,
-        "y": 2020,
-        "wires": [
-            [
-                "2a71771f8b2a5238"
-            ]
-        ]
-    },
-    {
-        "id": "5fdc8ded819fa9ec",
-        "type": "xiaoai-tts",
-        "z": "f6f2187d.f17ca8",
-        "name": "快看下鱼缸，水泵好像出问题了哦！",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "滴~滴~快看下鱼缸，水泵好像出问题了哦！",
-        "device": "",
-        "x": 1770,
-        "y": 2020,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "41e53469506435bd",
-        "type": "ha-wait-until",
-        "z": "f6f2187d.f17ca8",
-        "name": "等待可能的水泵转速过低异常",
-        "server": "2e463763d424c21d",
-        "version": 2,
-        "outputs": 1,
-        "entityId": "sensor.esp32s2_fish_pumpspeed",
-        "entityIdFilterType": "exact",
-        "property": "state",
-        "comparator": "lte",
-        "value": "1000",
-        "valueType": "num",
-        "timeout": "",
-        "timeoutType": "num",
-        "timeoutUnits": "seconds",
-        "checkCurrentState": true,
-        "blockInputOverrides": true,
-        "outputProperties": [],
-        "entityLocation": "data",
-        "entityLocationType": "none",
-        "x": 760,
-        "y": 2020,
-        "wires": [
-            [
-                "8ea174a9846d177f"
-            ]
-        ]
-    },
-    {
-        "id": "c4fce35f9e863516",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水位当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "50",
-        "halt_if_type": "num",
-        "halt_if_compare": "gt",
-        "entity_id": "sensor.esp32s2_fish_waterlever",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 500,
-        "y": 2100,
-        "wires": [
-            [
-                "d220715e964160d6"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "2a71771f8b2a5238",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "light.esp32s2_fish_waterpumppwm",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1180,
-        "y": 2020,
-        "wires": [
-            [
-                "20b906c760eac0b0"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "dce52a7e5d8b55f4",
-        "type": "api-current-state",
-        "z": "f6f2187d.f17ca8",
-        "name": "水泵当前状态",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "light.esp32s2_fish_waterpumppwm",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 500,
-        "y": 2020,
-        "wires": [
-            [
-                "41e53469506435bd"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "a38d01580afe78e6",
-        "type": "server-state-changed",
-        "z": "f6f2187d.f17ca8",
-        "name": "电脑与小爱音箱音量联动",
-        "server": "2e463763d424c21d",
-        "version": 4,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "switch.lemesh_sw0a02_8dce_switch",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": true,
-        "ignoreCurrentStateUnavailable": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 250,
-        "y": 380,
-        "wires": [
-            [
-                "1f0b9eb12c6fb0de"
-            ],
-            [
-                "1b35451c9d3808a1"
-            ]
-        ]
-    },
-    {
-        "id": "1f0b9eb12c6fb0de",
-        "type": "xiaoai-volume",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "xiaoai": "98d726c3977efed0",
-        "volume": "40",
-        "device": "",
-        "x": 480,
-        "y": 360,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "1b35451c9d3808a1",
-        "type": "xiaoai-volume",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "xiaoai": "98d726c3977efed0",
-        "volume": "20",
-        "device": "",
-        "x": 480,
-        "y": 420,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "d220715e964160d6",
-        "type": "delay",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "2",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 680,
-        "y": 2100,
-        "wires": [
-            [
-                "c343416864c34d4c"
-            ]
-        ]
     }
 ]
