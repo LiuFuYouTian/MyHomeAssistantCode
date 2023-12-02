@@ -1,18 +1,18 @@
 [
     {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "鱼缸控制",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "fa933ea47f894dbe",
         "type": "tab",
         "label": "卧室自动控制",
         "disabled": false,
         "info": "",
         "env": []
-    },
-    {
-        "id": "f6f2187d.f17ca8",
-        "type": "tab",
-        "label": "鱼缸控制",
-        "disabled": false,
-        "info": ""
     },
     {
         "id": "2e463763d424c21d",
@@ -41,346 +41,6 @@
         "id": "98d726c3977efed0",
         "type": "xiaoai-tts-configurator",
         "name": ""
-    },
-    {
-        "id": "8612378df1e2670f",
-        "type": "server-state-changed",
-        "z": "fa933ea47f894dbe",
-        "name": "电脑与小爱音箱音量联动",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "outputs": 2,
-        "exposeAsEntityConfig": "",
-        "entityId": "switch.lemesh_sw0a02_8dce_switch",
-        "entityIdType": "exact",
-        "outputInitially": false,
-        "stateType": "str",
-        "ifState": "on",
-        "ifStateType": "str",
-        "ifStateOperator": "is",
-        "outputOnlyOnStateChange": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": true,
-        "ignoreCurrentStateUnavailable": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 670,
-        "y": 380,
-        "wires": [
-            [
-                "ea5dc659a2f69575"
-            ],
-            [
-                "6df555d8e1019b57"
-            ]
-        ]
-    },
-    {
-        "id": "ea5dc659a2f69575",
-        "type": "xiaoai-volume",
-        "z": "fa933ea47f894dbe",
-        "name": "",
-        "xiaoai": "98d726c3977efed0",
-        "volume": "40",
-        "device": "",
-        "x": 900,
-        "y": 360,
-        "wires": [
-            [
-                "4714152e365b3633"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "6df555d8e1019b57",
-        "type": "xiaoai-volume",
-        "z": "fa933ea47f894dbe",
-        "name": "",
-        "xiaoai": "98d726c3977efed0",
-        "volume": "20",
-        "device": "",
-        "x": 900,
-        "y": 400,
-        "wires": [
-            [
-                "0222b45ee69a83d7"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "4714152e365b3633",
-        "type": "xiaoai-tts",
-        "z": "fa933ea47f894dbe",
-        "name": "电脑开了呀~我把音量调大了哦",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "电脑开了呀~我把音量调大了哦",
-        "device": "",
-        "x": 1150,
-        "y": 360,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "0222b45ee69a83d7",
-        "type": "xiaoai-tts",
-        "z": "fa933ea47f894dbe",
-        "name": "电脑关了呀~我把音量调小了哦",
-        "xiaoai": "98d726c3977efed0",
-        "tts": "电脑关了呀~我把音量调小了哦",
-        "device": "",
-        "x": 1150,
-        "y": 400,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "ef2aa5c00a5eb4f2",
-        "type": "inject",
-        "z": "fa933ea47f894dbe",
-        "name": "0点~6点检查水泵功率",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "*/5 0-5 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 690,
-        "y": 540,
-        "wires": [
-            [
-                "f764ace420a9d741"
-            ]
-        ]
-    },
-    {
-        "id": "cff616c30a6e9dcf",
-        "type": "function",
-        "z": "fa933ea47f894dbe",
-        "name": "水泵功率转换为百分比",
-        "func": "msg.payload = msg.data.attributes.brightness/255*100;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1180,
-        "y": 540,
-        "wires": [
-            [
-                "82349839880e8829"
-            ]
-        ]
-    },
-    {
-        "id": "238816f978eb1bc8",
-        "type": "debug",
-        "z": "fa933ea47f894dbe",
-        "name": "早上6点水泵设置为100%",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1190,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "f764ace420a9d741",
-        "type": "api-current-state",
-        "z": "fa933ea47f894dbe",
-        "name": "获取水泵功率",
-        "server": "2e463763d424c21d",
-        "version": 3,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "jsonata",
-        "halt_if_compare": "is",
-        "entity_id": "light.esp32s2_fish_waterpumppwm",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 940,
-        "y": 540,
-        "wires": [
-            [
-                "cff616c30a6e9dcf"
-            ]
-        ]
-    },
-    {
-        "id": "82349839880e8829",
-        "type": "switch",
-        "z": "fa933ea47f894dbe",
-        "name": "判断当前功率是否大于75%",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "75",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1440,
-        "y": 540,
-        "wires": [
-            [
-                "7d5a14951886d16d"
-            ]
-        ]
-    },
-    {
-        "id": "7d5a14951886d16d",
-        "type": "api-call-service",
-        "z": "fa933ea47f894dbe",
-        "name": "水泵设置为75%",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "light",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_waterpumppwm"
-        ],
-        "data": "{\"brightness_pct\":75}",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1680,
-        "y": 540,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3c4fe57a2347e7af",
-        "type": "api-call-service",
-        "z": "fa933ea47f894dbe",
-        "name": "水泵设置为100%",
-        "server": "2e463763d424c21d",
-        "version": 5,
-        "debugenabled": true,
-        "domain": "light",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.esp32s2_fish_waterpumppwm"
-        ],
-        "data": "{\"brightness_pct\":100}",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 950,
-        "y": 640,
-        "wires": [
-            [
-                "238816f978eb1bc8"
-            ]
-        ]
-    },
-    {
-        "id": "3ac13281759c047f",
-        "type": "inject",
-        "z": "fa933ea47f894dbe",
-        "name": "6点自动把水泵设置为100%",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 06 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 700,
-        "y": 640,
-        "wires": [
-            [
-                "3c4fe57a2347e7af"
-            ]
-        ]
     },
     {
         "id": "3cc11d24.ff01a2",
@@ -416,9 +76,7 @@
         "x": 240,
         "y": 600,
         "wires": [
-            [
-                "5ac04c094343a0ea"
-            ]
+            []
         ]
     },
     {
@@ -491,9 +149,7 @@
         "x": 240,
         "y": 720,
         "wires": [
-            [
-                "5ac04c094343a0ea"
-            ]
+            []
         ]
     },
     {
@@ -695,8 +351,7 @@
         "y": 1220,
         "wires": [
             [
-                "6a89bee2bae8a3a6",
-                "1109415b5eb25db9"
+                "6a89bee2bae8a3a6"
             ]
         ]
     },
@@ -1623,13 +1278,15 @@
         "wires": [
             [
                 "6f4f5eecb804e905",
-                "578528ce4cb42b55"
+                "578528ce4cb42b55",
+                "6a214e3795ea202e"
             ],
             [
                 "6f4f5eecb804e905",
                 "3f37a620aa749412",
                 "ab2203cd6430c72e",
-                "0990ae3482710a57"
+                "0990ae3482710a57",
+                "dabe1f1dfe501536"
             ]
         ]
     },
@@ -1662,7 +1319,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1080,
-        "y": 600,
+        "y": 580,
         "wires": []
     },
     {
@@ -1688,7 +1345,7 @@
         "entityLocation": "data",
         "entityLocationType": "none",
         "x": 540,
-        "y": 1920,
+        "y": 1940,
         "wires": [
             [
                 "a6a916f16e27123c"
@@ -1717,12 +1374,13 @@
         "outputProperties": [],
         "queue": "none",
         "x": 760,
-        "y": 1920,
+        "y": 1940,
         "wires": [
             [
                 "1117bb18e5bf80a4",
                 "fb4941291ce28ff2",
-                "5ea7a3ba788c9c24"
+                "5ea7a3ba788c9c24",
+                "24834f77204e18cb"
             ]
         ]
     },
@@ -1740,7 +1398,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1030,
-        "y": 1880,
+        "y": 1840,
         "wires": []
     },
     {
@@ -1955,7 +1613,8 @@
             [
                 "9ac1f6ccfa2e4943",
                 "5fdc8ded819fa9ec",
-                "7d204f6b39f59b08"
+                "7d204f6b39f59b08",
+                "92f4e39cef901969"
             ],
             []
         ]
@@ -2372,7 +2031,8 @@
         "y": 2320,
         "wires": [
             [
-                "9b969e219a7f3208"
+                "9b969e219a7f3208",
+                "a7984d69c4cd2690"
             ],
             []
         ]
@@ -2381,9 +2041,9 @@
         "id": "9b969e219a7f3208",
         "type": "xiaoai-tts",
         "z": "f6f2187d.f17ca8",
-        "name": "鱼缸出现过异常记得检查鱼缸哦~",
+        "name": "鱼缸出现过异常记得看下鱼缸哦~",
         "xiaoai": "98d726c3977efed0",
-        "tts": "鱼缸出现过异常记得检查鱼缸哦~",
+        "tts": "鱼缸出现过异常记得看下鱼缸哦~",
         "device": "",
         "x": 780,
         "y": 2320,
@@ -2414,7 +2074,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1700,
-        "y": 2080,
+        "y": 2140,
         "wires": [
             []
         ]
@@ -2495,9 +2155,580 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1080,
-        "y": 480,
+        "y": 460,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "bf0372736606965a",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "开摄像头灯",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp32cam_kitchen_light"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 570,
+        "y": 1080,
+        "wires": [
+            [
+                "30403f8dd1d00c7b"
+            ]
+        ]
+    },
+    {
+        "id": "30403f8dd1d00c7b",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 780,
+        "y": 1080,
+        "wires": [
+            [
+                "2fb99772e0f85129"
+            ]
+        ]
+    },
+    {
+        "id": "2fb99772e0f85129",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "关摄像头灯",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "light",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp32cam_kitchen_light"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 970,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e55f9f647bad50c6",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "0点~6点定时开摄像头灯",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "*/30 0-5 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 1080,
+        "wires": [
+            [
+                "bf0372736606965a"
+            ]
+        ]
+    },
+    {
+        "id": "6a214e3795ea202e",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "手机通知：我刚刚喂鱼了哦~",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "notify",
+        "service": "mobile_app_samsung",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"我刚刚喂鱼了哦~\",\"title\":\"小爱同学\",\"target\":\"platform specific\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1120,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dabe1f1dfe501536",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "手机通知：喂食器出现异常了！！",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "notify",
+        "service": "mobile_app_samsung",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"喂食器出现异常了！！\",\"title\":\"小爱同学\",\"target\":\"platform specific\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1140,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "24834f77204e18cb",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "手机通知：快看下鱼缸，好像没水了！！",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "notify",
+        "service": "mobile_app_samsung",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"快看下鱼缸，好像没水了！！\",\"title\":\"小爱同学\",\"target\":\"platform specific\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1080,
+        "y": 1880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "92f4e39cef901969",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "手机通知：快看下鱼缸，水泵好像出问题了哦！",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "notify",
+        "service": "mobile_app_samsung",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"快看下鱼缸，水泵好像出问题了哦！\",\"title\":\"小爱同学\",\"target\":\"platform specific\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1800,
+        "y": 2080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a7984d69c4cd2690",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "手机通知：鱼缸出现过异常记得看下鱼缸哦~",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "notify",
+        "service": "mobile_app_samsung",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"鱼缸出现过异常记得看下鱼缸哦~\",\"title\":\"小爱同学\",\"target\":\"platform specific\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 810,
+        "y": 2280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8612378df1e2670f",
+        "type": "server-state-changed",
+        "z": "fa933ea47f894dbe",
+        "name": "电脑与小爱音箱音量联动",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "switch.lemesh_sw0a02_8dce_switch",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "on",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 670,
+        "y": 380,
+        "wires": [
+            [
+                "ea5dc659a2f69575"
+            ],
+            [
+                "6df555d8e1019b57"
+            ]
+        ]
+    },
+    {
+        "id": "ea5dc659a2f69575",
+        "type": "xiaoai-volume",
+        "z": "fa933ea47f894dbe",
+        "name": "",
+        "xiaoai": "98d726c3977efed0",
+        "volume": "40",
+        "device": "",
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6df555d8e1019b57",
+        "type": "xiaoai-volume",
+        "z": "fa933ea47f894dbe",
+        "name": "",
+        "xiaoai": "98d726c3977efed0",
+        "volume": "20",
+        "device": "",
+        "x": 900,
+        "y": 400,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4714152e365b3633",
+        "type": "xiaoai-tts",
+        "z": "fa933ea47f894dbe",
+        "name": "电脑开了呀~我把音量调大了哦",
+        "xiaoai": "98d726c3977efed0",
+        "tts": "电脑开了呀~我把音量调大了哦",
+        "device": "",
+        "x": 1150,
+        "y": 360,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0222b45ee69a83d7",
+        "type": "xiaoai-tts",
+        "z": "fa933ea47f894dbe",
+        "name": "电脑关了呀~我把音量调小了哦",
+        "xiaoai": "98d726c3977efed0",
+        "tts": "电脑关了呀~我把音量调小了哦",
+        "device": "",
+        "x": 1150,
+        "y": 400,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ef2aa5c00a5eb4f2",
+        "type": "inject",
+        "z": "fa933ea47f894dbe",
+        "name": "0点~6点检查水泵功率",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "*/1 0-5 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 680,
+        "y": 540,
+        "wires": [
+            [
+                "f764ace420a9d741"
+            ]
+        ]
+    },
+    {
+        "id": "cff616c30a6e9dcf",
+        "type": "function",
+        "z": "fa933ea47f894dbe",
+        "name": "水泵功率转换为百分比",
+        "func": "msg.payload = msg.data.attributes.brightness/255*100;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 540,
+        "wires": [
+            [
+                "82349839880e8829"
+            ]
+        ]
+    },
+    {
+        "id": "238816f978eb1bc8",
+        "type": "debug",
+        "z": "fa933ea47f894dbe",
+        "name": "早上6点水泵设置为100%",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "f764ace420a9d741",
+        "type": "api-current-state",
+        "z": "fa933ea47f894dbe",
+        "name": "获取水泵功率",
+        "server": "2e463763d424c21d",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "jsonata",
+        "halt_if_compare": "is",
+        "entity_id": "light.esp32s2_fish_waterpumppwm",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 940,
+        "y": 540,
+        "wires": [
+            [
+                "cff616c30a6e9dcf"
+            ]
+        ]
+    },
+    {
+        "id": "82349839880e8829",
+        "type": "switch",
+        "z": "fa933ea47f894dbe",
+        "name": "判断当前功率是否大于75%",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "75",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1440,
+        "y": 540,
+        "wires": [
+            [
+                "7d5a14951886d16d"
+            ]
+        ]
+    },
+    {
+        "id": "7d5a14951886d16d",
+        "type": "api-call-service",
+        "z": "fa933ea47f894dbe",
+        "name": "水泵设置为75%",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp32s2_fish_waterpumppwm"
+        ],
+        "data": "{\"brightness_pct\":75}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1680,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c4fe57a2347e7af",
+        "type": "api-call-service",
+        "z": "fa933ea47f894dbe",
+        "name": "水泵设置为100%",
+        "server": "2e463763d424c21d",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp32s2_fish_waterpumppwm"
+        ],
+        "data": "{\"brightness_pct\":100}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 950,
+        "y": 640,
+        "wires": [
+            [
+                "238816f978eb1bc8"
+            ]
+        ]
+    },
+    {
+        "id": "3ac13281759c047f",
+        "type": "inject",
+        "z": "fa933ea47f894dbe",
+        "name": "6点自动把水泵设置为100%",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 06 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 700,
+        "y": 640,
+        "wires": [
+            [
+                "3c4fe57a2347e7af"
+            ]
         ]
     }
 ]
