@@ -1,0 +1,1902 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "电气自动控制",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "34036ea8307bace0",
+        "type": "xiaoai-tts",
+        "z": "f6f2187d.f17ca8",
+        "name": "电脑开了呀~我把音量调大了哦",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": "电脑开了呀~我把音量调大了哦",
+        "device": "",
+        "x": 590,
+        "y": 480,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a1c09fe794d45f20",
+        "type": "xiaoai-tts",
+        "z": "f6f2187d.f17ca8",
+        "name": "电脑关了呀~我把音量调小了哦",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": "电脑关了呀~我把音量调小了哦",
+        "device": "",
+        "x": 590,
+        "y": 520,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8ebbe98958e12f0d",
+        "type": "xiaoai-volume",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "xiaoai": "0ec866c7adab01e2",
+        "volume": "40",
+        "device": "",
+        "x": 340,
+        "y": 480,
+        "wires": [
+            [
+                "34036ea8307bace0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "38a69622797899c4",
+        "type": "xiaoai-volume",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "xiaoai": "0ec866c7adab01e2",
+        "volume": "20",
+        "device": "",
+        "x": 340,
+        "y": 520,
+        "wires": [
+            [
+                "a1c09fe794d45f20"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "329914dd588a9b76",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "8ebbe98958e12f0d",
+                "38a69622797899c4"
+            ]
+        ]
+    },
+    {
+        "id": "ed9d323a4f66cfda",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "卧室空气净化器-100%",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp_a1_air02_funpwm"
+        ],
+        "labelId": [],
+        "data": "{\"brightness_pct\":100}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 920,
+        "y": 1300,
+        "wires": [
+            [
+                "b00ca6cfdad53a8a"
+            ]
+        ]
+    },
+    {
+        "id": "b99971f70da0f41f",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "卧室空气净化器-20%",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp_a1_air02_funpwm"
+        ],
+        "labelId": [],
+        "data": "{\"brightness_pct\":20}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 1000,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d90967f8189d92e5",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "客厅空气净化器-30%",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp_a1_air01_funpwm"
+        ],
+        "labelId": [],
+        "data": "{\"brightness_pct\":30}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 1000,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1deecc3abb8fdaa1",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "客厅空气净化器-100%",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp_a1_air01_funpwm"
+        ],
+        "labelId": [],
+        "data": "{\"brightness_pct\":100}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 920,
+        "y": 1340,
+        "wires": [
+            [
+                "b00ca6cfdad53a8a"
+            ]
+        ]
+    },
+    {
+        "id": "b00ca6cfdad53a8a",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "hours",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1140,
+        "y": 1320,
+        "wires": [
+            [
+                "b414fe241d38fbcd",
+                "f244d20690686ef6"
+            ]
+        ]
+    },
+    {
+        "id": "d1da34582fa85162",
+        "type": "xiaoai-tts",
+        "z": "f6f2187d.f17ca8",
+        "name": "回了呀~太想你啦~",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": "回了呀~太想你啦~",
+        "device": "",
+        "x": 990,
+        "y": 1080,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "905689fe03701e76",
+        "type": "xiaoai-tts",
+        "z": "f6f2187d.f17ca8",
+        "name": " 哔哔~",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": " 哔哔~",
+        "device": "",
+        "x": 870,
+        "y": 1260,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b414fe241d38fbcd",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "客厅空气净化器-30%",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp_a1_air01_funpwm"
+        ],
+        "labelId": [],
+        "data": "{\"brightness_pct\":30}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 1360,
+        "y": 1300,
+        "wires": [
+            [
+                "806c974d8e651536"
+            ]
+        ]
+    },
+    {
+        "id": "f244d20690686ef6",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "卧室空气净化器-20%",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.esp_a1_air02_funpwm"
+        ],
+        "labelId": [],
+        "data": "{\"brightness_pct\":20}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 1360,
+        "y": 1340,
+        "wires": [
+            [
+                "806c974d8e651536"
+            ]
+        ]
+    },
+    {
+        "id": "2983cfe7151fec04",
+        "type": "ha-wait-until",
+        "z": "f6f2187d.f17ca8",
+        "name": "等待客厅有人过来",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 1,
+        "entities": {
+            "entity": [
+                "binary_sensor.esp_power_ctrl01_humandetect"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "property": "state",
+        "comparator": "is",
+        "value": "on",
+        "valueType": "str",
+        "timeout": "0",
+        "timeoutType": "num",
+        "timeoutUnits": "seconds",
+        "checkCurrentState": false,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "x": 710,
+        "y": 1200,
+        "wires": [
+            [
+                "b99971f70da0f41f",
+                "d90967f8189d92e5"
+            ]
+        ]
+    },
+    {
+        "id": "33322edbf8c93eb4",
+        "type": "server-state-changed",
+        "z": "f6f2187d.f17ca8",
+        "name": "手机连接家里WIFI检测",
+        "server": "71ef4160c314976d",
+        "version": 6,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "sensor.13pro_wi_fi_connection"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "TP_LINK_DEV_5G",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 180,
+        "y": 1260,
+        "wires": [
+            [
+                "448510373b8db4fb"
+            ],
+            [
+                "b0574b4994874e54"
+            ]
+        ]
+    },
+    {
+        "id": "b0574b4994874e54",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "30",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 420,
+        "y": 1340,
+        "wires": [
+            [
+                "d60ef680b032435b"
+            ]
+        ]
+    },
+    {
+        "id": "d60ef680b032435b",
+        "type": "api-current-state",
+        "z": "f6f2187d.f17ca8",
+        "name": "手机连接家里WIFI检测",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "TP_LINK_DEV_5G",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.13pro_wi_fi_connection",
+        "state_type": "str",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 600,
+        "y": 1340,
+        "wires": [
+            [],
+            [
+                "905689fe03701e76",
+                "ed9d323a4f66cfda",
+                "1deecc3abb8fdaa1",
+                "c62f6442185627a1"
+            ]
+        ]
+    },
+    {
+        "id": "c25504063b416b9e",
+        "type": "server-state-changed",
+        "z": "f6f2187d.f17ca8",
+        "name": "客厅有人检测",
+        "server": "71ef4160c314976d",
+        "version": 6,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "binary_sensor.esp_power_ctrl01_humandetect"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "on",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 150,
+        "y": 840,
+        "wires": [
+            [
+                "aca995e5d8144788"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "aca995e5d8144788",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "获取当前时间",
+        "func": "// 创建日期对象\nvar now = new Date();\n\n// 方法 1: 获取时间戳\nmsg.payload = now.getTime();  // 毫秒时间戳\n\n// 方法 2: 格式化为字符串 (YYYY-MM-DD HH:mm:ss)\nmsg.payload = now.getHours();\n\nif (global.get('LightState') == 1)\n{\n    msg.payload = 255;\n}\n\n// if (now.getHours() >= 18 || now.getHours() <= 7)\n// {\n//     msg.payload = 1;\n// }\n// else\n// {\n//     msg.payload = 0;\n// }\n\n// 方法 3: 使用 toISOString() 标准格式\n// msg.payload = now.toISOString(); // \"2025-06-01T08:30:00.000Z\"\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 840,
+        "wires": [
+            [
+                "c6dacd46079fe927"
+            ]
+        ]
+    },
+    {
+        "id": "f9c1d2f3a2bdca26",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "开客厅灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.esp_power_ctrl01_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_on",
+        "x": 740,
+        "y": 840,
+        "wires": [
+            [
+                "06fbf4305fd9a4d4"
+            ]
+        ]
+    },
+    {
+        "id": "c6dacd46079fe927",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "时间是否合适",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "0",
+                "vt": "num",
+                "v2": "6",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "18",
+                "vt": "num",
+                "v2": "24",
+                "v2t": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 540,
+        "y": 840,
+        "wires": [
+            [
+                "f9c1d2f3a2bdca26"
+            ],
+            [
+                "f9c1d2f3a2bdca26"
+            ]
+        ]
+    },
+    {
+        "id": "b010353b6047ee80",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "关闭客厅灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_off",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.esp_power_ctrl01_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_off",
+        "x": 1730,
+        "y": 840,
+        "wires": [
+            [
+                "405157d1e14cdc3a"
+            ]
+        ]
+    },
+    {
+        "id": "4d70fda6354102f8",
+        "type": "api-current-state",
+        "z": "f6f2187d.f17ca8",
+        "name": "客厅真的没人了~",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.esp_power_ctrl01_humandetect",
+        "state_type": "str",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1150,
+        "y": 840,
+        "wires": [
+            [
+                "06454d9885dd1026",
+                "5e25b2faaa13e060"
+            ],
+            [
+                "06fbf4305fd9a4d4"
+            ]
+        ]
+    },
+    {
+        "id": "06fbf4305fd9a4d4",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 920,
+        "y": 840,
+        "wires": [
+            [
+                "4d70fda6354102f8"
+            ]
+        ]
+    },
+    {
+        "id": "405157d1e14cdc3a",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "记录下刚关灯",
+        "func": "// 设置全局变量\n\nglobal.set('LightState',1);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1960,
+        "y": 840,
+        "wires": [
+            [
+                "64ed8e35acbaf909"
+            ]
+        ]
+    },
+    {
+        "id": "64ed8e35acbaf909",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 2140,
+        "y": 840,
+        "wires": [
+            [
+                "658d04b6bc454c48"
+            ]
+        ]
+    },
+    {
+        "id": "658d04b6bc454c48",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "已经关灯一会了",
+        "func": "// 设置全局变量\n\nglobal.set('LightState',0);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "// 此处添加的代码，将在停止或重新部署节点时运行。 \nglobal.set('LightState', 0);",
+        "libs": [],
+        "x": 2320,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "06454d9885dd1026",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1340,
+        "y": 840,
+        "wires": [
+            [
+                "e1206e2a72ff7deb"
+            ]
+        ]
+    },
+    {
+        "id": "e1206e2a72ff7deb",
+        "type": "api-current-state",
+        "z": "f6f2187d.f17ca8",
+        "name": "客厅真的没人了~",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.esp_power_ctrl01_humandetect",
+        "state_type": "str",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1530,
+        "y": 840,
+        "wires": [
+            [
+                "b010353b6047ee80"
+            ],
+            [
+                "06fbf4305fd9a4d4"
+            ]
+        ]
+    },
+    {
+        "id": "0b8d8a877693dcf8",
+        "type": "server-state-changed",
+        "z": "f6f2187d.f17ca8",
+        "name": "卧室有人检测",
+        "server": "71ef4160c314976d",
+        "version": 6,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "binary_sensor.eps_power_ctrl02_humandetect"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "on",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 150,
+        "y": 660,
+        "wires": [
+            [
+                "c7e59c9fadddd145"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c7e59c9fadddd145",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "获取当前时间",
+        "func": "// 创建日期对象\nvar now = new Date();\n\n// 方法 1: 获取时间戳\nmsg.payload = now.getTime();  // 毫秒时间戳\n\n// 方法 2: 格式化为字符串 (YYYY-MM-DD HH:mm:ss)\nmsg.payload = now.getHours();\n\nif (global.get('BedroomLightState') == 1)\n{\n    msg.payload = 255;\n}\n\n// if (now.getHours() >= 18 || now.getHours() <= 7)\n// {\n//     msg.payload = 1;\n// }\n// else\n// {\n//     msg.payload = 0;\n// }\n\n// 方法 3: 使用 toISOString() 标准格式\n// msg.payload = now.toISOString(); // \"2025-06-01T08:30:00.000Z\"\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 660,
+        "wires": [
+            [
+                "451ed51f733ac566"
+            ]
+        ]
+    },
+    {
+        "id": "dd4d949d943856cd",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "开卧室灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.eps_power_ctrl02_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_on",
+        "x": 740,
+        "y": 660,
+        "wires": [
+            [
+                "bdb380bee4a1c464"
+            ]
+        ]
+    },
+    {
+        "id": "451ed51f733ac566",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "时间是否合适",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "0",
+                "vt": "num",
+                "v2": "6",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "18",
+                "vt": "num",
+                "v2": "24",
+                "v2t": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 540,
+        "y": 660,
+        "wires": [
+            [
+                "dd4d949d943856cd"
+            ],
+            [
+                "dd4d949d943856cd"
+            ]
+        ]
+    },
+    {
+        "id": "34826995502121f6",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "关闭卧室灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_off",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.eps_power_ctrl02_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_off",
+        "x": 1730,
+        "y": 660,
+        "wires": [
+            [
+                "6df5aa6f5d774edb"
+            ]
+        ]
+    },
+    {
+        "id": "1dc09a6180508240",
+        "type": "api-current-state",
+        "z": "f6f2187d.f17ca8",
+        "name": "卧室真的没人了~",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.eps_power_ctrl02_humandetect",
+        "state_type": "str",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1150,
+        "y": 660,
+        "wires": [
+            [
+                "d932e4b003c1738c",
+                "266682486ca89c25"
+            ],
+            [
+                "bdb380bee4a1c464"
+            ]
+        ]
+    },
+    {
+        "id": "bdb380bee4a1c464",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "hours",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 920,
+        "y": 660,
+        "wires": [
+            [
+                "1dc09a6180508240"
+            ]
+        ]
+    },
+    {
+        "id": "6df5aa6f5d774edb",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "记录下刚关灯",
+        "func": "// 设置全局变量\n\nglobal.set('BedroomLightState',1);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1960,
+        "y": 660,
+        "wires": [
+            [
+                "de4a1039207099a8"
+            ]
+        ]
+    },
+    {
+        "id": "de4a1039207099a8",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 2140,
+        "y": 660,
+        "wires": [
+            [
+                "64be6ed261557b2e"
+            ]
+        ]
+    },
+    {
+        "id": "64be6ed261557b2e",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "已经关灯一会了",
+        "func": "// 设置全局变量\n\nglobal.set('BedroomLightState',0);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "// 此处添加的代码，将在停止或重新部署节点时运行。 \nglobal.set('LightState', 0);",
+        "libs": [],
+        "x": 2320,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d932e4b003c1738c",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1340,
+        "y": 660,
+        "wires": [
+            [
+                "233e7377468fbe25"
+            ]
+        ]
+    },
+    {
+        "id": "233e7377468fbe25",
+        "type": "api-current-state",
+        "z": "f6f2187d.f17ca8",
+        "name": "卧室真的没人了~",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.eps_power_ctrl02_humandetect",
+        "state_type": "str",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1530,
+        "y": 660,
+        "wires": [
+            [
+                "34826995502121f6"
+            ],
+            [
+                "bdb380bee4a1c464"
+            ]
+        ]
+    },
+    {
+        "id": "3e5c3ff5a5c96013",
+        "type": "xiaoai-nlp-conversation",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "xiaoai": "0ec866c7adab01e2",
+        "device": "",
+        "limit": "",
+        "x": 360,
+        "y": 1640,
+        "wires": [
+            [
+                "067ba00d02a8e00c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c45c7fd8ff87dd59",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 1640,
+        "wires": [
+            [
+                "3e5c3ff5a5c96013"
+            ]
+        ]
+    },
+    {
+        "id": "067ba00d02a8e00c",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "筛选语音更新状态",
+        "func": "// 设置全局变量\n\nif (msg.payload != global.get('LastSpeak'))\n{\n    global.set('LastSpeak', msg.payload);\n}\nelse\n{\n    msg.payload = 0;\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "// 此处添加的代码，将在停止或重新部署节点时运行。 \nglobal.set('LastSpeak', \"\");",
+        "libs": [],
+        "x": 570,
+        "y": 1640,
+        "wires": [
+            [
+                "96dabf7aab4f0122"
+            ]
+        ]
+    },
+    {
+        "id": "96dabf7aab4f0122",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "语音筛选",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "关闭卧室灯",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "开投影仪",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "开卧室灯",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "关投影仪",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "关闭投影仪",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "关闭客厅灯",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "开客厅灯",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "灯都关",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "灯都开",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 9,
+        "x": 800,
+        "y": 1640,
+        "wires": [
+            [
+                "0c3ac132098b3852"
+            ],
+            [
+                "072f872239981dc4"
+            ],
+            [
+                "4ba406117ee43b24"
+            ],
+            [
+                "4ba406117ee43b24"
+            ],
+            [
+                "4ba406117ee43b24"
+            ],
+            [
+                "b16586e2bd665251"
+            ],
+            [
+                "fdc34eedec7921e4"
+            ],
+            [
+                "b16586e2bd665251",
+                "0c3ac132098b3852"
+            ],
+            [
+                "4ba406117ee43b24",
+                "fdc34eedec7921e4"
+            ]
+        ]
+    },
+    {
+        "id": "30f5fe9ec9e7f920",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "关闭卧室灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_off",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.eps_power_ctrl02_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_off",
+        "x": 1270,
+        "y": 1560,
+        "wires": [
+            [
+                "1a6752597b67c373"
+            ]
+        ]
+    },
+    {
+        "id": "4ba406117ee43b24",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "开卧室灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.eps_power_ctrl02_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_on",
+        "x": 1060,
+        "y": 1620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fdc34eedec7921e4",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "开客厅灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.esp_power_ctrl01_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_on",
+        "x": 1060,
+        "y": 1760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "23272ce6497fae49",
+        "type": "api-call-service",
+        "z": "f6f2187d.f17ca8",
+        "name": "关闭客厅灯",
+        "server": "71ef4160c314976d",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_off",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.esp_power_ctrl01_on_off"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_off",
+        "x": 1270,
+        "y": 1700,
+        "wires": [
+            [
+                "c40ecd282a365194"
+            ]
+        ]
+    },
+    {
+        "id": "0c3ac132098b3852",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "记录下刚关灯",
+        "func": "// 设置全局变量\n\nglobal.set('BedroomLightState',1);\nmsg.payload = 1;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1560,
+        "wires": [
+            [
+                "30f5fe9ec9e7f920"
+            ]
+        ]
+    },
+    {
+        "id": "1a6752597b67c373",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1440,
+        "y": 1560,
+        "wires": [
+            [
+                "35329d4f7614c752"
+            ]
+        ]
+    },
+    {
+        "id": "35329d4f7614c752",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "已经关灯一会了",
+        "func": "// 设置全局变量\n\nglobal.set('BedroomLightState',0);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "// 此处添加的代码，将在停止或重新部署节点时运行。 \nglobal.set('LightState', 0);",
+        "libs": [],
+        "x": 1620,
+        "y": 1560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b16586e2bd665251",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "记录下刚关灯",
+        "func": "// 设置全局变量\n\nglobal.set('LightState',1);\nmsg.payload = 1;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1700,
+        "wires": [
+            [
+                "23272ce6497fae49"
+            ]
+        ]
+    },
+    {
+        "id": "c40ecd282a365194",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1440,
+        "y": 1700,
+        "wires": [
+            [
+                "cc7d11be8a306b6f"
+            ]
+        ]
+    },
+    {
+        "id": "cc7d11be8a306b6f",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "已经关灯一会了",
+        "func": "// 设置全局变量\n\nglobal.set('LightState',0);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "// 此处添加的代码，将在停止或重新部署节点时运行。 \nglobal.set('LightState', 0);",
+        "libs": [],
+        "x": 1620,
+        "y": 1700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "072f872239981dc4",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 1540,
+        "wires": [
+            [
+                "0c3ac132098b3852"
+            ]
+        ]
+    },
+    {
+        "id": "77f7868266f68647",
+        "type": "ha-wait-until",
+        "z": "f6f2187d.f17ca8",
+        "name": "等待卧室有人过来",
+        "server": "71ef4160c314976d",
+        "version": 3,
+        "outputs": 1,
+        "entities": {
+            "entity": [
+                "binary_sensor.eps_power_ctrl02_humandetect"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "property": "state",
+        "comparator": "is",
+        "value": "on",
+        "valueType": "str",
+        "timeout": "0",
+        "timeoutType": "num",
+        "timeoutUnits": "seconds",
+        "checkCurrentState": false,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "x": 710,
+        "y": 1160,
+        "wires": [
+            [
+                "d1da34582fa85162"
+            ]
+        ]
+    },
+    {
+        "id": "806c974d8e651536",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "hours",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1580,
+        "y": 1340,
+        "wires": [
+            [
+                "b0574b4994874e54"
+            ]
+        ]
+    },
+    {
+        "id": "266682486ca89c25",
+        "type": "xiaoai-tts",
+        "z": "f6f2187d.f17ca8",
+        "name": "我准备关卧室灯了哦~",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": "我准备关卧室灯了哦~",
+        "device": "",
+        "x": 1380,
+        "y": 580,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5e25b2faaa13e060",
+        "type": "xiaoai-tts",
+        "z": "f6f2187d.f17ca8",
+        "name": "我准备关客厅灯了哦~",
+        "xiaoai": "0ec866c7adab01e2",
+        "tts": "我准备关客厅灯了哦~",
+        "device": "",
+        "x": 1380,
+        "y": 780,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c62f6442185627a1",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "记录主人离开了",
+        "func": "// 设置全局变量\n\nglobal.set('ManLeave',1);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "// 此处添加的代码，将在停止或重新部署节点时运行。 \nglobal.set('ManLeave', 0);",
+        "libs": [],
+        "x": 900,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "448510373b8db4fb",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "判断主人是否离开过",
+        "func": "// 设置全局变量\n\nif (global.get('ManLeave') == 1) {\n    msg.payload = 1;\n    global.set('ManLeave', 0);\n}\nelse\n{\n    msg.payload = 0;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 1180,
+        "wires": [
+            [
+                "77f7868266f68647",
+                "2983cfe7151fec04"
+            ]
+        ]
+    },
+    {
+        "id": "0ec866c7adab01e2",
+        "type": "xiaoai-tts-configurator",
+        "name": ""
+    },
+    {
+        "id": "71ef4160c314976d",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 5,
+        "addon": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": "30",
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": ": ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "default",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": false
+    }
+]
