@@ -1,0 +1,96 @@
+esphome:
+  name: esp-3dprint-heat
+  friendly_name: ESP_3DPRINT_HEAT
+  platformio_options:
+    board_build.flash_mode: dio
+    board_build.mcu: esp32c3
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+      type: esp-idf
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "vgtID3YDMpRxrv1eCwuJ3Kl2fDqTMEvPgTF+EwutF6g="
+
+ota:
+  - platform: esphome
+    password: "ed5f4381bc0f37cd64ff086b6caba5e0"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp-3Dprint-Heat"
+    password: "ZQ0M2gEbTayq"
+
+# I2C配置
+i2c:
+  sda: GPIO7
+  scl: GPIO6
+  scan: true  # 调试时可查看I2C设备
+
+
+# AHT21传感器配置
+sensor:
+  - platform: aht10
+    temperature:
+      name: "${device_name} Temperature"
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      id: temp_aht21
+    humidity:
+      name: "${device_name} Humidity"
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      id: hum_aht21
+    address: 0x38
+    update_interval: 1s
+
+output:
+  #加热控制
+  - platform: ledc
+    pin: GPIO4
+    id: IO_HEAT_PWM
+    frequency: 500HZ
+  #假的温度控制
+  - platform: ledc
+    pin: GPIO3
+    id: IO_TEMP_PWM
+    frequency: 500HZ
+
+switch:
+  #开关控制
+  - platform: gpio
+    pin: GPIO5
+    id: IO_FanControl
+    name: "ON/OFF"
+    #inverted: true
+    restore_mode: ALWAYS_OFF  # 默认上电开启
+
+light:
+  #水泵转速控制
+  - platform: monochromatic
+    output: IO_TEMP_PWM
+    gamma_correct: 1
+    name: "TEMP"
+    id: TEMP
+    restore_mode: RESTORE_DEFAULT_OFF
+  - platform: monochromatic
+    output: IO_HEAT_PWM
+    gamma_correct: 1
+    name: "HEAT_PWM"
+    id: HEAT_PWM
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+    - switch.turn_on: IO_FanControl
+    #- delay: 60s
+    #- light.turn_off: HEAT_PWM
+
+captive_portal:
+    

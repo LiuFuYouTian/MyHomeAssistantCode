@@ -1,0 +1,118 @@
+esphome:
+  name: esp-a1-air01
+  friendly_name: ESP_A1_AIR01
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "NBD9nyJ54UfmeFTsuuvphUsd6e8m8pinkdUsd1rI514="
+
+ota:
+  - platform: esphome
+    password: "951214b7f97c2a77fdc3a97831b0061b"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp-A1-Air01 Fallback Hotspot"
+    password: "7Qhdp24NCKo8"
+
+
+switch:
+  #开关控制
+  - platform: gpio
+    pin: GPIO4
+    id: IO_PowerControl
+    name: "ON/OFF"
+    inverted: true
+    restore_mode: RESTORE_DEFAULT_OFF  # 恢复上次状态，第一次启动时关闭
+
+output:
+  #水泵转速控制
+  - platform: ledc
+    pin: GPIO7
+    id: IO_FunPWM
+    inverted: true
+    frequency: 13000HZ
+  #状态指示LED控制
+  - platform: slow_pwm
+    pin: GPIO8
+    id: StateLED
+    period: 1s
+
+
+# Example usage in a light
+light:
+  #水泵转速控制
+  - platform: monochromatic
+    output: IO_FunPWM
+    gamma_correct: 0.5
+    name: "FunPWM"
+    restore_mode: RESTORE_DEFAULT_ON
+  #状态指示LED
+  - platform: monochromatic
+    output: StateLED
+    gamma_correct: 1.0
+    name: "StateLED"
+    restore_mode: RESTORE_DEFAULT_OFF
+  #RGB灯带
+  - platform: neopixelbus
+    type: GRB
+    variant: 800kbps
+    pin: GPIO6
+    num_leds: 31
+    name: "环形灯带"
+    id: led_ring
+    restore_mode: RESTORE_DEFAULT_OFF  # 恢复上次状态，第一次启动时关闭
+    
+    effects:
+      # 只使用内置呼吸效果
+      - pulse:
+          name: "呼吸效果"
+          transition_length: 3s
+          update_interval: 3s
+          min_brightness: 30%
+          max_brightness: 100%
+      
+      # 简单颜色变化效果
+      - random:
+          name: "随机颜色"
+          transition_length: 2s
+          update_interval: 5s
+
+      # 1. 基础旋转光点效果
+      - addressable_scan:
+          name: "单色旋转"
+          move_interval: 100ms  # 旋转速度（值越小越快）
+          scan_width: 1         # 光点宽度（1表示单个灯珠）
+          scan_length: 0        # 尾部长度（0表示无拖尾）
+          fade_out_rate: 100    # 无淡出效果
+          colors:
+            - red: 100%         # 纯白色光点
+              green: 100%
+              blue: 100%
+      
+              
+# Example configuration entry
+sensor:  
+  #风扇转速检查
+  - platform: pulse_counter
+    pin: GPIO5
+    name: 'FunSpeed'
+    update_interval: 1s
+
+
+captive_portal:
+    

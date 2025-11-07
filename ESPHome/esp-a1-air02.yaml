@@ -1,0 +1,103 @@
+esphome:
+  name: esp-a1-air02
+  friendly_name: ESP_A1_AIR02
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "MvpBmPPi8bzLv3qzKczxuPUvtWmLvqdBLFu8LrKHxtI="
+
+ota:
+  - platform: esphome
+    password: "e9017d3009286bb1cbf74475f90da500"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp-A1-Air02 Fallback Hotspot"
+    password: "pQp7yWTokn9G"
+
+switch:
+  #开关控制
+  - platform: gpio
+    pin: GPIO4
+    id: IO_PowerControl
+    name: "ON/OFF"
+    inverted: true
+    restore_mode: RESTORE_DEFAULT_OFF  # 恢复上次状态，第一次启动时关闭
+
+output:
+  #水泵转速控制
+  - platform: ledc
+    pin: GPIO7
+    id: IO_FunPWM
+    inverted: true
+    frequency: 13000HZ
+  #状态指示LED控制
+  - platform: slow_pwm
+    pin: GPIO8
+    id: StateLED
+    period: 1s
+
+
+# Example usage in a light
+light:
+  #水泵转速控制
+  - platform: monochromatic
+    output: IO_FunPWM
+    gamma_correct: 0.5
+    name: "FunPWM"
+    restore_mode: RESTORE_DEFAULT_ON
+  #状态指示LED
+  - platform: monochromatic
+    output: StateLED
+    gamma_correct: 1.0
+    name: "StateLED"
+    restore_mode: RESTORE_DEFAULT_OFF
+  #RGB灯带
+  - platform: neopixelbus
+    type: GRB
+    variant: 800kbps
+    pin: GPIO6
+    num_leds: 32
+    name: "环形灯带"
+    id: led_ring
+    restore_mode: RESTORE_DEFAULT_OFF  # 恢复上次状态，第一次启动时关闭
+    
+    effects:
+      # 只使用内置呼吸效果
+      - pulse:
+          name: "呼吸效果"
+          transition_length: 3s
+          update_interval: 3s
+          min_brightness: 30%
+          max_brightness: 100%
+      
+      # 简单颜色变化效果
+      - random:
+          name: "随机颜色"
+          transition_length: 2s
+          update_interval: 5s
+              
+# Example configuration entry
+sensor:  
+  #风扇转速检查
+  - platform: pulse_counter
+    pin: GPIO5
+    name: 'FunSpeed'
+    update_interval: 1s
+
+
+captive_portal:
+    

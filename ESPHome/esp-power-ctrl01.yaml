@@ -1,0 +1,46 @@
+esphome:
+  name: esp-power-ctrl01
+  friendly_name: ESP_POWER_CTRL01
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "YJ3pgfxXfbTsA61riRxONcwgKA2aDywXszPDqTSwOeU="
+
+ota:
+  - platform: esphome
+    password: "a05d3249b941151f7441618a3cf09eb7"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp-Power-Ctrl01"
+    password: "x6zyiEPpGAFd"
+
+switch:
+  #开关控制
+  - platform: gpio
+    pin: GPIO4
+    id: IO_PowerControl
+    name: "ON/OFF"
+    #inverted: true
+    restore_mode: ALWAYS_ON  # 默认上电开启
+
+binary_sensor:
+  - platform: gpio
+    name: "HumanDetect"
+    pin: GPIO3
+
+captive_portal:
+    
